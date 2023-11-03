@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/incora-tt/static/css/main.7d3bc8e7.css",
+    "main.js": "/incora-tt/static/js/main.b0d5a67f.js",
+    "index.html": "/incora-tt/index.html",
+    "main.7d3bc8e7.css.map": "/incora-tt/static/css/main.7d3bc8e7.css.map",
+    "main.b0d5a67f.js.map": "/incora-tt/static/js/main.b0d5a67f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7d3bc8e7.css",
+    "static/js/main.b0d5a67f.js"
+  ]
+}
