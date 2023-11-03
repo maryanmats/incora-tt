@@ -1,7 +1,6 @@
 # [DEMO LINK](https://maryanmats.github.io/incora-tt/)
 
-# LOGIN: incora
-# PASSWORD: incora
+# LOGIN: incora , PASSWORD: incora
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
