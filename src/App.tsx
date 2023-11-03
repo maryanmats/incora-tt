@@ -1,25 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Layout } from "./components/Layout";
+import { Navigation } from "./components/Navigation";
+import { LoginPage } from "./pages/LoginPage";
+import { Route, Routes } from "react-router-dom";
+import { FeedsPage } from "./pages/FeedsPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
+import { CommentsPage } from "./pages/CommentsPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<LoginPage />} />
+      <Route path="/feeds" element={<FeedsPage />} />
+      <Route path="/feeds/:id" element={<CommentsPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }
 
