@@ -7,17 +7,15 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Feed } from "../../types/Feed";
-import { useDispatch } from "react-redux";
-import { deleteFeed } from "../../redux/slice/feedCreateSlice";
 import { Link } from "react-router-dom";
+import { methods } from "../../api/api";
 
 interface Props {
   feed: Feed;
+  handleDelete: (id: number) => void;
 }
 
-export const FeedCard: React.FC<Props> = ({ feed }) => {
-  const dispatch = useDispatch();
-
+export const FeedCard: React.FC<Props> = ({ feed, handleDelete }) => {
   return (
     <Card sx={{ minWidth: "100%", margin: 1 }}>
       <CardContent>
@@ -30,8 +28,8 @@ export const FeedCard: React.FC<Props> = ({ feed }) => {
         <Link to={`/feeds/${feed.id}`}>
           <Button size="small">Read More</Button>
         </Link>
-        <IconButton onClick={() => dispatch(deleteFeed(feed.id))} size="small">
-          <DeleteIcon />
+        <IconButton size="small">
+          <DeleteIcon onClick={() => handleDelete(feed.id)} />
         </IconButton>
       </CardActions>
     </Card>

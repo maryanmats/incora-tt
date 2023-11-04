@@ -1,32 +1,52 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { setFeeds } from "../../redux/slice/feedCreateSlice";
+import React, { useEffect, useState } from "react";
 import { FeedCard } from "../FeedCard";
+import { Feed } from "../../types/Feed";
+import { methods } from "../../api/api";
+import { AddFeed } from "../AddFeed";
+import { Button } from "@mui/material";
 
 export const FeedsCards = () => {
-  const data = useSelector((state: RootState) => state.posts.posts);
-  const dispatch = useDispatch();
+  const [feeds, setFeeds] = useState<Feed[]>([]);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((response) => response.json())
-      .then((result) => dispatch(setFeeds(result.slice(0, 10))))
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    methods
+      .get("posts")
+      .then((result) => setFeeds(result))
+      .catch((error) => console.log("Error", error));
   }, []);
 
-  console.log(data);
+  const addFeed = (newFeed: Feed) => {
+    setFeeds((prevFeeds) => [...prevFeeds, newFeed]);
+  };
+
+  const handleDelete = (id: number) => {
+    methods
+      .delete(`posts/${id}`)
+      .then(() => setFeeds((prev) => prev.filter((feed) => feed.id !== id)));
+  };
+
+  const filteredFeeds = showAll ? feeds : feeds.slice(0, 3);
 
   return (
     <>
-      {data.length > 0 &&
-        data.map((feed) => (
+      <AddFeed addFeed={addFeed} maxId={feeds.length + 1} />
+      {feeds.length > 0 &&
+        filteredFeeds.map((feed) => (
           <React.Fragment key={feed.title}>
-            <FeedCard feed={feed} />
+            <FeedCard feed={feed} handleDelete={handleDelete} />
           </React.Fragment>
         ))}
+      {!showAll && (
+        <Button
+          sx={{ fontWeight: 600 }}
+          variant="contained"
+          size="large"
+          onClick={() => setShowAll(true)}
+        >
+          Show All
+        </Button>
+      )}
     </>
   );
 };

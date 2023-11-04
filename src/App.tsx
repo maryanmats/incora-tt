@@ -1,7 +1,5 @@
 import React from "react";
 import "./App.css";
-import { Layout } from "./components/Layout";
-import { Navigation } from "./components/Navigation";
 import { LoginPage } from "./pages/LoginPage";
 import { Route, Routes } from "react-router-dom";
 import { FeedsPage } from "./pages/FeedsPage";

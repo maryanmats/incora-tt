@@ -5,14 +5,18 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useDispatch } from "react-redux";
-import { addFeed } from "../../redux/slice/feedCreateSlice";
+import { methods } from "../../api/api";
+import { Feed } from "../../types/Feed";
 
-export const AddFeed = () => {
+interface Props {
+  addFeed: (newFeed: Feed) => void;
+  maxId: number;
+}
+
+export const AddFeed: React.FC<Props> = ({ addFeed, maxId }) => {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,10 +36,25 @@ export const AddFeed = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    dispatch(addFeed({ title, body }));
-    setOpen(false);
-    setTitle("");
-    setBody("");
+
+    const newFeed = {
+      id: maxId,
+      title,
+      body,
+      userId: 3,
+    };
+
+    methods
+      .post("/posts", newFeed)
+      .then((result) => {
+        addFeed(result);
+        setOpen(false);
+        setTitle("");
+        setBody("");
+      })
+      .catch((error) => {
+        console.error("Error creating a new feed:", error);
+      });
   };
 
   return (
